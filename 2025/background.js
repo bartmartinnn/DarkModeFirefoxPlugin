@@ -1,4 +1,4 @@
-let darkModeEnabled = true;
+let darkModeEnabled = false;
 
 chrome.action.onClicked.addListener((tab) => {
   darkModeEnabled = !darkModeEnabled;
