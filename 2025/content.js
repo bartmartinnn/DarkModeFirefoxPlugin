@@ -30,12 +30,33 @@ function disableDarkMode() {
   }
 }
 
+// Helper to get domain
+function getDomain() {
+  return window.location.hostname;
+}
+
+// On load, check storage for this domain's dark mode preference
+chrome.storage.local.get([getDomain()], (result) => {
+  if (result[getDomain()]) {
+    enableDarkMode();
+  } else {
+    disableDarkMode();
+  }
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'TOGGLE_DARK_MODE') {
     if (message.enabled) {
       enableDarkMode();
+      // Save preference for this domain
+      let obj = {};
+      obj[getDomain()] = true;
+      chrome.storage.local.set(obj);
     } else {
       disableDarkMode();
+      let obj = {};
+      obj[getDomain()] = false;
+      chrome.storage.local.set(obj);
     }
   }
-}); 
+});
