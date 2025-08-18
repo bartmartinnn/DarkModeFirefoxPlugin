@@ -30,8 +30,6 @@ function disableDarkMode() {
   }
 }
 
-enableDarkMode(); // Start enabled by default
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === 'TOGGLE_DARK_MODE') {
     if (message.enabled) {
